@@ -3,36 +3,35 @@ package com.factures.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "invoices")
+@Table(name = "invoices", schema = "facturam_db")
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    private Timestamp date;
+    @Column(nullable = false)
+    private LocalDate date;
     private String state;
+    @Column(nullable = false)
     private String reason;
 
     @Column(name = "due_date")
-    private Timestamp dueDate;
-
-    @Column(name = "tax_base")
-    private long taxBase;
+    private LocalDate dueDate;
 
     @Column(name = "total_amount")
-    private long totalAmount;
+    private BigDecimal totalAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_companies")
+    @JoinColumn(name = "id_companies", nullable = false)
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name = "id_client")
+    @JoinColumn(name = "id_client", nullable = false)
     private Client client;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
@@ -41,10 +40,9 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(String state, String reason, long taxBase, Company company, Client client) {
+    public Invoice(String state, String reason, Company company, Client client) {
         this.state = state;
         this.reason = reason;
-        this.taxBase = taxBase;
         this.company = company;
         this.client = client;
     }
@@ -53,11 +51,11 @@ public class Invoice {
         return id;
     }
 
-    public Timestamp getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -77,27 +75,19 @@ public class Invoice {
         this.reason = reason;
     }
 
-    public Timestamp getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Timestamp dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public long getTaxBase() {
-        return taxBase;
-    }
-
-    public void setTaxBase(long taxBase) {
-        this.taxBase = taxBase;
-    }
-
-    public long getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(long totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 

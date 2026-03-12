@@ -31,8 +31,8 @@ public class InvoicesControllerTest {
 
     @Test
     void getAllInvoices() throws Exception {
-        Invoice invoice1 = new Invoice("ACCEPTED", "Restore Home", 21L, new Company("Constructors", "const@const.com","Const Address"),new Client("Pedro", "pedro@pedro.com","Pedro Street"));
-        Invoice invoice2 = new Invoice("PAID", "Car fix", 10L, new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
+        Invoice invoice1 = new Invoice("ACCEPTED", "Restore Home", new Company("Constructors", "const@const.com","Const Address"),new Client("Pedro", "pedro@pedro.com","Pedro Street"));
+        Invoice invoice2 = new Invoice("PAID", "Car fix", new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
 
         Mockito.when(service.getAllInvoices()).thenReturn(List.of(invoice1,invoice2));
 
@@ -44,7 +44,7 @@ public class InvoicesControllerTest {
 
     @Test
     void getAllInvoicesOfAClient() throws Exception{
-        Invoice invoice2 = new Invoice("PAID", "Car fix", 10L, new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
+        Invoice invoice2 = new Invoice("PAID", "Car fix", new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
         Mockito.when(service.getAllInvoicesByClient(1L)).thenReturn(List.of(invoice2));
 
         mockMvc.perform(get("/invoices/client/{clientId}",1L))
@@ -55,7 +55,7 @@ public class InvoicesControllerTest {
 
     @Test
     void getInvoiceById()throws Exception{
-        Invoice invoice2 = new Invoice("PAID", "Car fix", 10L, new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
+        Invoice invoice2 = new Invoice("PAID", "Car fix", new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
 
         Mockito.when(service.getInvoiceById(1L)).thenReturn(invoice2);
 
@@ -67,7 +67,7 @@ public class InvoicesControllerTest {
 
     @Test
     void getInvoiceByCompany() throws Exception{
-        Invoice invoice2 = new Invoice("PAID", "Car fix", 10L, new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
+        Invoice invoice2 = new Invoice("PAID", "Car fix", new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
         Mockito.when(service.getInvoicesByCompany(1L)).thenReturn(List.of(invoice2));
 
         mockMvc.perform(get("/invoices/company/{companyId}", 1L))
@@ -77,7 +77,7 @@ public class InvoicesControllerTest {
 
     @Test
     void getInvoiceByState() throws Exception{
-        Invoice invoice2 = new Invoice("PAID", "Car fix", 10L, new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
+        Invoice invoice2 = new Invoice("PAID", "Car fix", new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
 
         Mockito.when(service.getInvoicesByState("PAID")).thenReturn(List.of(invoice2));
 
@@ -88,7 +88,7 @@ public class InvoicesControllerTest {
 
     @Test
     void createInvoice() throws Exception{
-        Invoice invoice2 = new Invoice("PAID", "Car fix", 10L, new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
+        Invoice invoice2 = new Invoice("PAID", "Car fix", new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
         Mockito.when(service.createInvoice(Mockito.any(Invoice.class))).thenReturn(invoice2);
 
         mockMvc.perform(post("/invoices")

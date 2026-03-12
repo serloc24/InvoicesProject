@@ -2,8 +2,10 @@ package com.factures.entities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
-@Table(name = "products")
+@Table(name = "products", schema = "facturam_db")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,15 +14,15 @@ public class Product {
     private String description;
 
     @Column(name = "unit_price")
-    private double unitPrice;
+    private BigDecimal unitPrice;
 
-    private double taxes;
+    private BigDecimal taxes;
 
 
     public Product() {
     }
 
-    public Product(String description, double unitPrice, double taxes) {
+    public Product(String description, BigDecimal unitPrice, BigDecimal taxes) {
         this.description = description;
         this.unitPrice = unitPrice;
         this.taxes = taxes;
@@ -38,19 +40,19 @@ public class Product {
         this.description = description;
     }
 
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public double getTaxes() {
+    public BigDecimal getTaxes() {
         return taxes;
     }
 
-    public void setTaxes(double taxes) {
+    public void setTaxes(BigDecimal taxes) {
         this.taxes = taxes;
     }
 }

@@ -3,14 +3,17 @@ package com.factures.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "clients")
+@Table(name = "clients", schema = "facturam_db")
 public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String address;
 
     public Client(){}

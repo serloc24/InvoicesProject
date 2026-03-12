@@ -3,15 +3,18 @@ package com.factures.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "companies")
+@Table(name = "companies", schema = "facturam_db")
 public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String address;
     private String iban;
 

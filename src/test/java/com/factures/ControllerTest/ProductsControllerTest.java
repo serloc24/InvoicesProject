@@ -12,6 +12,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,8 +33,8 @@ public class ProductsControllerTest {
 
     @Test
     void getAllProducts() throws Exception{
-        Product product1 = new Product("Pc", 22.1, 21);
-        Product product2 = new Product("Tv", 243.43, 21);
+        Product product1 = new Product("Pc", new BigDecimal("22.0"), new BigDecimal("21.0"));
+        Product product2 = new Product("Tv", new BigDecimal("243.43"), new BigDecimal("21.0"));
 
         Mockito.when(service.getAllProducts()).thenReturn(List.of(product1,product2));
 
