@@ -1,13 +1,14 @@
 package com.factures.Repository;
 
-import com.factures.entities.Clients;
+import com.factures.entities.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ClientsRepository extends JpaRepository<Clients, Long> {
+public interface ClientsRepository extends JpaRepository<Client, Long> {
     /*
     Automagically implemented by JpaRepository
         companyRepository.findAll()           // SELECT * FROM companies
@@ -18,6 +19,6 @@ public interface ClientsRepository extends JpaRepository<Clients, Long> {
         companyRepository.count()             // COUNT(*)
      */
 
-    Optional<Clients> findByEmail(String email);
-    Optional<Clients> findByName(String name);
+    Optional<Client> findByEmail(String email);
+    Optional<Client> findByName(String name);
 }

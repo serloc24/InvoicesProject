@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "products")
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -16,7 +16,18 @@ public class Products {
 
     private double taxes;
 
-    public Products() {
+
+    public Product() {
+    }
+
+    public Product(String description, double unitPrice, double taxes) {
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.taxes = taxes;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getDescription() {

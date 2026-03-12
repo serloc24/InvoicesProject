@@ -1,15 +1,15 @@
 package com.factures.Repository;
 
-import com.factures.entities.Clients;
+import com.factures.entities.Client;
 import com.factures.entities.Company;
-import com.factures.entities.Invoices;
+import com.factures.entities.Invoice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface InvoicesRepository extends JpaRepository<Invoices, Long> {
+public interface InvoicesRepository extends JpaRepository<Invoice, Long> {
      /*
     Automagically implemented by JpaRepository
         companyRepository.findAll()           // SELECT * FROM companies
@@ -20,7 +20,7 @@ public interface InvoicesRepository extends JpaRepository<Invoices, Long> {
         companyRepository.count()             // COUNT(*)
      */
 
-    List<Invoices> findByClient(Clients client);
-    List<Invoices> findByCompany(Company company);
-    List<Invoices> findByState(String state);
+    List<Invoice> findByClient(Client client);
+    List<Invoice> findByCompany(Company company);
+    List<Invoice> findByState(String state);
 }

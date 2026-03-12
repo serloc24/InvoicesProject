@@ -12,15 +12,19 @@ public class InvoiceDetails {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_invoice")
-    private Invoices invoice;
+    private Invoice invoice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_product")
-    private Products product;
+    private Product product;
 
     private int amount;
 
     public InvoiceDetails() {
+    }
+
+    public long getId() {
+        return id;
     }
 
     public int getAmount() {
@@ -30,4 +34,6 @@ public class InvoiceDetails {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+
 }

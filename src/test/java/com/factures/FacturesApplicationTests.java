@@ -1,8 +1,7 @@
 package com.factures;
 
 import com.factures.Repository.*;
-import com.factures.entities.Invoices;
-import org.junit.jupiter.api.Assertions;
+import com.factures.entities.Invoice;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,7 +53,7 @@ class FacturesApplicationTests {
         assertEquals(3, clientsRepository.count());
 
         //InvoicesDetails && Invoices Repository
-        Invoices invoice = invoicesRepository.findById(1L).get();
+        Invoice invoice = invoicesRepository.findById(1L).orElseThrow();
         invoicesDetailsRepository.findByInvoice(invoice);
         assertEquals(1L,invoice.getId());
 

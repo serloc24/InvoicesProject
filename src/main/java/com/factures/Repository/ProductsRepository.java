@@ -1,13 +1,13 @@
 package com.factures.Repository;
 
-import com.factures.entities.Products;
+import com.factures.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ProductsRepository extends JpaRepository<Products, Long> {
+public interface ProductsRepository extends JpaRepository<Product, Long> {
      /*
     Automagically implemented by JpaRepository
         companyRepository.findAll()           // SELECT * FROM companies
@@ -18,6 +18,6 @@ public interface ProductsRepository extends JpaRepository<Products, Long> {
         companyRepository.count()             // COUNT(*)
      */
 
-    List<Products> findByDescriptionContainingIgnoreCase(String description);
+    List<Product> findByDescriptionContainingIgnoreCase(String description);
 
 }

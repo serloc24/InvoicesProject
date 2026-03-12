@@ -1,7 +1,7 @@
 package com.factures.Repository;
 
 import com.factures.entities.InvoiceDetails;
-import com.factures.entities.Invoices;
+import com.factures.entities.Invoice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,5 +17,5 @@ public interface InvoicesDetailsRepository extends JpaRepository<InvoiceDetails,
         companyRepository.count()             // COUNT(*)
      */
 
-    List<InvoiceDetails> findByInvoice(Invoices invoice);
+    List<InvoiceDetails> findByInvoice(Invoice invoice);
 }
