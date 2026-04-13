@@ -62,14 +62,14 @@ public class InvoicesController {
         return ResponseEntity.created(location).body(createdInvoice);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{invoiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInvoice(@RequestBody Invoice updatedInvoice, @PathVariable Long invoiceId){
         invoiceService.updateInvoice(updatedInvoice, invoiceId);
     }
 
-    @PatchMapping(value = "/{invoiceId}", params = "state")
-    public ResponseEntity<Invoice> updateState(@RequestParam Long invoiceId, @RequestBody String newState){
+    @PatchMapping(value = "/{invoiceId}")
+    public ResponseEntity<Invoice> updateState(@PathVariable Long invoiceId, @RequestBody String newState){
         Invoice updatedInvoice = invoiceService.updateState(invoiceId,newState);
         return ResponseEntity.ok(updatedInvoice);
     }

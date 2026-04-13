@@ -57,7 +57,7 @@ public class InvoiceService {
     public Invoice updateInvoice(Invoice updatedInvoice, Long id){
         Invoice theInvoice = invoicesRepository.findById(updatedInvoice.getId()).orElseThrow(() -> new RuntimeException("Didn't find the invoice to update"));
         if(theInvoice.getId() == id){
-            return invoicesRepository.save(theInvoice);
+            return invoicesRepository.save(updatedInvoice);
         }
         throw new IllegalArgumentException("The id in the object is not the same you want to update");
     }

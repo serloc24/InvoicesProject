@@ -17,13 +17,13 @@ public class InvoicesDetailsController {
     private InvoiceService invoiceService;
 
     @GetMapping("/{invoiceDetailId}")
-    public ResponseEntity<InvoiceDetails> getInvoiceDetailbyId(@RequestParam Long id){
+    public ResponseEntity<InvoiceDetails> getInvoiceDetailbyId(@PathVariable Long id){
             InvoiceDetails theInvoiceDetail = invoiceDetailsService.getInvoiceDetailById(id);
             return ResponseEntity.ok(theInvoiceDetail);
     }
 
     @PutMapping("/{invoiceDetailsId}")
-    public ResponseEntity<InvoiceDetails> updateInvoiceDetailById(@RequestParam Long id, @RequestBody InvoiceDetails updatedInvoiceDetail){
+    public ResponseEntity<InvoiceDetails> updateInvoiceDetailById(@PathVariable Long id, @RequestBody InvoiceDetails updatedInvoiceDetail){
         return ResponseEntity.ok(invoiceDetailsService.updateInvoiceDetail(id, updatedInvoiceDetail));
 
     }
