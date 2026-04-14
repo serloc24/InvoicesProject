@@ -2,6 +2,8 @@ package com.factures.ControllerTest;
 
 import com.factures.Controllers.ClientsController;
 import com.factures.Service.ClientsService;
+import com.factures.dto.request.CreateClientRequest;
+import com.factures.dto.response.ClientResponse;
 import com.factures.entities.Client;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -33,8 +35,8 @@ public class ClientControllerTest {
 
     @Test
     void getAllClients() throws Exception{
-        Client client1 = new Client("Pedro", "pedro@pedro.com","Calle Pedro");
-        Client client2 = new Client("Pascual", "pascual@pascual.com","Calle Pascual");
+        ClientResponse client1 = new ClientResponse(1,"Pedro", "pedro@pedro.com","Calle Pedro");
+        ClientResponse client2 = new ClientResponse(2,"Pascual", "pascual@pascual.com","Calle Pascual");
         Mockito.when(service.getAllClients()).thenReturn(List.of(client1, client2));
         mockMvc.perform(get("/clients"))
                 .andExpect(status().isOk())
@@ -43,8 +45,8 @@ public class ClientControllerTest {
 
     @Test
     void createClient() throws Exception {
-        Client client1 = new Client(1L,"Pedro", "pedro@pedro.com","Calle Pedro");
-        Mockito.when(service.createClient(Mockito.any(Client.class))).thenReturn(client1);
+        ClientResponse client1 = new ClientResponse(1L,"Pedro", "pedro@pedro.com","Calle Pedro");
+        Mockito.when(service.createClient(Mockito.any(CreateClientRequest.class))).thenReturn(client1);
 
         mockMvc.perform(post("/clients")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +58,7 @@ public class ClientControllerTest {
 
     @Test
     void getAClientById() throws Exception{
-        Client client1 = new Client(1L, "Pedro", "pedro@pedro.com","Calle Pedro");
+        ClientResponse client1 = new ClientResponse(1L, "Pedro", "pedro@pedro.com","Calle Pedro");
         Mockito.when(service.getClientById(1L)).thenReturn(client1);
 
         mockMvc.perform(get("/clients/{id}", 1L))
@@ -67,7 +69,7 @@ public class ClientControllerTest {
 
     @Test
     void getAClientByName() throws Exception{
-        Client client1 = new Client(1L, "Pedro", "pedro@pedro.com","Calle Pedro");
+        ClientResponse client1 = new ClientResponse(1L, "Pedro", "pedro@pedro.com","Calle Pedro");
         Mockito.when(service.getClientByName("Pedro")).thenReturn(client1);
 
         mockMvc.perform(get("/clients").param("name","Pedro"))
