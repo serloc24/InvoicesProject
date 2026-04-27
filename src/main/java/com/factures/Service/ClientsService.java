@@ -8,6 +8,7 @@ import com.factures.dto.response.ClientResponse;
 import com.factures.entities.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ClientsService {
         this.clientsRepository = clientsRepository;
         this.clientMapper = clientMapper;
     }
-
+    @Transactional
     public ClientResponse createClient(CreateClientRequest requestClient) {
         if (clientsRepository.findByEmail(requestClient.email()).isPresent()) {
             throw new IllegalArgumentException("This email already exists");
@@ -49,6 +50,7 @@ public class ClientsService {
         return clientMapper.entityToDTO(theClient);
     }
 
+    @Transactional
     public ClientResponse updateClient(UpdateClientRequest toUpdateClient){
         if(clientsRepository.existsById(toUpdateClient.id())){
             Client theClient = clientMapper.updateToEntity(toUpdateClient);

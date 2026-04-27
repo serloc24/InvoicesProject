@@ -4,10 +4,12 @@ import com.factures.dto.request.CreateClientRequest;
 import com.factures.dto.request.UpdateClientRequest;
 import com.factures.dto.response.ClientResponse;
 import com.factures.entities.Client;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ClientMapper{
 
     public Client updateToEntity(UpdateClientRequest request){

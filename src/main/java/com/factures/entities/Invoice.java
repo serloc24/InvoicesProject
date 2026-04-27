@@ -2,6 +2,7 @@ package com.factures.entities;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -114,4 +115,6 @@ public class Invoice {
     public void setLines(List<InvoiceDetails> lines) {
         this.lines = lines;
     }
+
 }
+

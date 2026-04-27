@@ -2,6 +2,8 @@ package com.factures.Service;
 
 import com.factures.Repository.ClientsRepository;
 import com.factures.Repository.InvoicesRepository;
+import com.factures.dto.response.ClientResponse;
+import com.factures.dto.response.InvoiceResponse;
 import com.factures.entities.Client;
 import com.factures.entities.Company;
 import com.factures.entities.Invoice;
@@ -25,9 +27,11 @@ public class InvoiceService {
     @Autowired
     private InvoiceDetailsService invoiceDetailsService;
 
-    public List<Invoice> getAllInvoices() { return invoicesRepository.findAll(); }
+    public List<InvoiceResponse> getAllInvoices() {
+        return invoicesRepository.findAll();
+    }
     public List<Invoice> getAllInvoicesByClient(Long clientId){
-        Client theClient = clientsService.getClientById(clientId);
+        ClientResponse theClient = clientsService.getClientById(clientId);
         return invoicesRepository.findByClient(theClient);
     }
     public Invoice getInvoiceById(Long id){ return invoicesRepository.findById(id).orElseThrow(); }

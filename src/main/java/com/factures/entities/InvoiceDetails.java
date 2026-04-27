@@ -35,5 +35,7 @@ public class InvoiceDetails {
         this.amount = amount;
     }
 
-
+    public Product getProduct() {
+        return product;
+    }
 }

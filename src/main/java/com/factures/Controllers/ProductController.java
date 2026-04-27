@@ -1,6 +1,8 @@
 package com.factures.Controllers;
 
 import com.factures.Service.ProductsService;
+import com.factures.dto.request.CreateProductRequest;
+import com.factures.dto.response.ProductResponse;
 import com.factures.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,10 @@ public class ProductController {
                 .buildAndExpand(theProduct.getId())
                 .toUri();
         return ResponseEntity.created(location).body(theProduct);
+    }
+    @PutMapping
+    public ResponseEntity<ProductResponse> updateProduct(@RequestBody CreateProductRequest request){
+
     }
 
 }

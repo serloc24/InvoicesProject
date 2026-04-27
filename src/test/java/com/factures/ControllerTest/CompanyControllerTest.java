@@ -2,6 +2,7 @@ package com.factures.ControllerTest;
 
 import com.factures.Controllers.CompanyController;
 import com.factures.Service.CompanyService;
+import com.factures.dto.response.CompanyResponse;
 import com.factures.entities.Company;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -31,8 +32,8 @@ public class CompanyControllerTest {
 
     @Test
     void getAllCompanies() throws Exception{
-        Company company1 =  new Company("Endesa","endesa@endesa.com","Calle endesa");
-        Company company2 =  new Company("Iberdrola","Iberdrola@Iberdrola.com","Calle Iberdrola");
+        CompanyResponse company1 =  new CompanyResponse("Endesa","endesa@endesa.com","Calle endesa");
+        CompanyResponse company2 =  new CompanyResponse("Iberdrola","Iberdrola@Iberdrola.com","Calle Iberdrola");
 
         Mockito.when(service.getAllCompanies()).thenReturn(List.of(company1,company2));
 
@@ -43,9 +44,20 @@ public class CompanyControllerTest {
 
     @Test
     void getCompanyByName() throws Exception{
-        Company company1 =  new Company("Endesa","endesa@endesa.com","Calle endesa");
+        CompanyResponse company1 =  new CompanyResponse("Endesa","endesa@endesa.com","Calle endesa");
 
-        Mockito.when(service.getCompanyByName("Endesa")).thenReturn(company1);
+        Mockito.when(service.getCompanyByNameOrEmail("Endesa", "")).thenReturn(company1);
+
+        mockMvc.perform(get("/companies").param("name", "Endesa"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Endesa"));
+    }
+
+    @Test
+    void getCompanyByEmail() throws Exception{
+        CompanyResponse company1 =  new CompanyResponse("Endesa","endesa@endesa.com","Calle endesa");
+
+        Mockito.when(service.getCompanyByNameOrEmail("","endesa@endesa.com")).thenReturn(company1);
 
         mockMvc.perform(get("/companies").param("name", "Endesa"))
                 .andExpect(status().isOk())
@@ -54,7 +66,7 @@ public class CompanyControllerTest {
 
     @Test
     void getCompanyById() throws Exception{
-        Company company1 =  new Company("Endesa","endesa@endesa.com","Calle endesa");
+        CompanyResponse company1 =  new CompanyResponse("Endesa","endesa@endesa.com","Calle endesa");
 
         Mockito.when(service.getCompanyById(1L)).thenReturn(company1);
 

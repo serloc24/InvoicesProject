@@ -2,7 +2,7 @@ package com.factures.dto.response;
 
 import java.util.Objects;
 
-public record CompanyResponse(String name, String email, String address, String iban) {
+public record CompanyResponse(String name, String email, String address) {
 
     public CompanyResponse{
         Objects.requireNonNull(name, "Name cannot be null");
