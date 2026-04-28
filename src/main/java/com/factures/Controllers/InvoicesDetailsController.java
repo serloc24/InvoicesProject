@@ -3,6 +3,7 @@ package com.factures.Controllers;
 import com.factures.Service.InvoiceDetailsService;
 import com.factures.Service.InvoiceService;
 import com.factures.dto.mapper.InvoiceDetailsMapper;
+import com.factures.dto.request.UpdateInvoiceDetailsRequest;
 import com.factures.dto.response.InvoiceDetailsResponse;
 import com.factures.entities.InvoiceDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class InvoicesDetailsController {
 
     @PutMapping("/{invoiceDetailsId}")
     public ResponseEntity<InvoiceDetailsResponse> updateInvoiceDetailById(@PathVariable Long id,
-                                                                          @RequestBody InvoiceDetails updatedInvoiceDetail){
-        return ResponseEntity.ok(invoiceDetailsService.updateInvoiceDetail(id, updatedInvoiceDetail));
+                                                                          @RequestBody UpdateInvoiceDetailsRequest updateRequest){
+        return ResponseEntity.ok(invoiceDetailsService.updateInvoiceDetail(id, updateRequest));
 
     }
 
