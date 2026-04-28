@@ -3,6 +3,7 @@ package com.factures.Service;
 import com.factures.Repository.InvoicesDetailsRepository;
 import com.factures.dto.mapper.InvoiceDetailsMapper;
 import com.factures.dto.request.CreateInvoiceDetailsRequest;
+import com.factures.dto.request.UpdateInvoiceDetailsRequest;
 import com.factures.dto.response.InvoiceDetailsResponse;
 import com.factures.entities.InvoiceDetails;
 import com.factures.entities.Invoice;
@@ -28,22 +29,23 @@ public class InvoiceDetailsService {
         return invoiceDetailsMapper.entityToDTO(theInvoiceDetails);
     }
 
-    public InvoiceDetails getInvoiceDetailById(Long id){
-        return invoicesDetailsRepository.findById(id).orElseThrow();
+    public InvoiceDetailsResponse getInvoiceDetailById(Long id){
+        InvoiceDetails theInvoiceDetail = invoicesDetailsRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("InvoiceDetail ID not found"));
+        return invoiceDetailsMapper.entityToDTO(theInvoiceDetail);
     }
 
-    public List<InvoiceDetails> getAllInvoicesDetailsByInvoice(Invoice invoice){
-        return invoicesDetailsRepository.findByInvoice(invoice);
+    public List<InvoiceDetailsResponse> getAllInvoicesDetailsByInvoice(Invoice invoice){
+        List<InvoiceDetails> allInvoiceDetails = invoicesDetailsRepository.findByInvoice(invoice);
+        return invoiceDetailsMapper.entitiesToDTOList(allInvoiceDetails);
     }
 
-    public InvoiceDetails updateInvoiceDetail(Long invoiceDetailsId, InvoiceDetails updatedInvoiceDetails){
-        InvoiceDetails theInvoiceDetail = invoicesDetailsRepository.findById(invoiceDetailsId).orElseThrow(() -> new RuntimeException("InvoiceDetailsId not found to update"));
-        if(theInvoiceDetail.getId() == updatedInvoiceDetails.getId()){
-            theInvoiceDetail.setAmount(updatedInvoiceDetails.getAmount());
-            return invoicesDetailsRepository.save(theInvoiceDetail);
-        }
-        throw new IllegalArgumentException("Both invoicesDetailsId are not the same to update");
-
+    public InvoiceDetailsResponse updateInvoiceDetail(Long invoiceDetailsId, UpdateInvoiceDetailsRequest request){
+        InvoiceDetails theInvoiceDetails = invoicesDetailsRepository.findById(invoiceDetailsId)
+                                                                    .orElseThrow(() -> new RuntimeException("InvoiceDetailsId not found to update"));
+        InvoiceDetails updatedInvoiceDetails = invoiceDetailsMapper.updateToEntity(request, theInvoiceDetails);
+        InvoiceDetails saved = invoicesDetailsRepository.save(updatedInvoiceDetails);
+        return invoiceDetailsMapper.entityToDTO(saved);
     }
 
     public void deleteInvoiceDetail(InvoiceDetails invoiceDetails){

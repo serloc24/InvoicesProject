@@ -1,7 +1,10 @@
 package com.factures.dto.mapper;
 
 import com.factures.dto.request.CreateInvoiceDetailsRequest;
+import com.factures.dto.request.UpdateInvoiceDetailsRequest;
+import com.factures.dto.request.UpdateInvoiceRequest;
 import com.factures.dto.response.InvoiceDetailsResponse;
+import com.factures.entities.Invoice;
 import com.factures.entities.InvoiceDetails;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +37,11 @@ public class InvoiceDetailsMapper {
         return detailsList.stream()
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public InvoiceDetails updateToEntity(UpdateInvoiceDetailsRequest request, InvoiceDetails existingInvoiceDetails){
+        existingInvoiceDetails.setAmount(request.amount());
+        return existingInvoiceDetails;
     }
 
 
