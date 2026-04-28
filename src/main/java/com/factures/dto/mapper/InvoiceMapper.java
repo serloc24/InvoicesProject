@@ -1,6 +1,7 @@
 package com.factures.dto.mapper;
 
 import com.factures.dto.request.CreateInvoiceRequest;
+import com.factures.dto.request.PatchInvoiceRequest;
 import com.factures.dto.request.UpdateInvoiceRequest;
 import com.factures.dto.response.InvoiceResponse;
 import com.factures.entities.Invoice;
@@ -53,5 +54,11 @@ public class InvoiceMapper {
         return invoices.stream()
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
+    }
+    public Invoice partialUpdateEntityFromRequest(PatchInvoiceRequest request, Invoice existingInvoice){
+        request.state().ifPresent(existingInvoice::setState);
+        request.reason().ifPresent(existingInvoice::setReason);
+        request.dueDate().ifPresent(existingInvoice::setDueDate);
+        return existingInvoice;
     }
 }

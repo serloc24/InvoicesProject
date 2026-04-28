@@ -1,6 +1,9 @@
 package com.factures.Service;
 
 import com.factures.Repository.InvoicesDetailsRepository;
+import com.factures.dto.mapper.InvoiceDetailsMapper;
+import com.factures.dto.request.CreateInvoiceDetailsRequest;
+import com.factures.dto.response.InvoiceDetailsResponse;
 import com.factures.entities.InvoiceDetails;
 import com.factures.entities.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +14,18 @@ import java.util.List;
 @Service
 public class InvoiceDetailsService {
 
-    @Autowired
-    private InvoicesDetailsRepository invoicesDetailsRepository;
+    private final InvoiceDetailsMapper invoiceDetailsMapper;
+    private final InvoicesDetailsRepository invoicesDetailsRepository;
 
-    public InvoiceDetails createInvoiceDetail(InvoiceDetails invoiceDetails){
-        return invoicesDetailsRepository.save(invoiceDetails);
+    public InvoiceDetailsService(InvoiceDetailsMapper invoiceDetailsMapper, InvoicesDetailsRepository invoicesDetailsRepository) {
+        this.invoiceDetailsMapper = invoiceDetailsMapper;
+        this.invoicesDetailsRepository = invoicesDetailsRepository;
+    }
+
+    public InvoiceDetailsResponse createInvoiceDetail(CreateInvoiceDetailsRequest invoiceDetailsRequest, Invoice invoice){
+        InvoiceDetails theInvoiceDetails = invoiceDetailsMapper.createToEntity(invoiceDetailsRequest);
+        theInvoiceDetails = invoicesDetailsRepository.save(theInvoiceDetails);
+        return invoiceDetailsMapper.entityToDTO(theInvoiceDetails);
     }
 
     public InvoiceDetails getInvoiceDetailById(Long id){
