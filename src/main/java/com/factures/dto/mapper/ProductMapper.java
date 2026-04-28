@@ -15,7 +15,7 @@ public class ProductMapper {
         return new Product(request.description(),request.unitPrice(), request.taxes());
     }
 
-    public Product updateToEntity(UpdateProductRequest update, Product existingProduct){
+    public Product updateToEntity(UpdateProductRequest update){
         existingProduct.setDescription(update.description());
         existingProduct.setUnitPrice(update.unitPrice());
         existingProduct.setTaxes(update.taxes());

@@ -2,6 +2,8 @@ package com.factures.ControllerTest;
 
 import com.factures.Controllers.ProductController;
 import com.factures.Service.ProductsService;
+import com.factures.dto.request.CreateProductRequest;
+import com.factures.dto.response.ProductResponse;
 import com.factures.entities.Product;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -33,8 +35,8 @@ public class ProductsControllerTest {
 
     @Test
     void getAllProducts() throws Exception{
-        Product product1 = new Product("Pc", new BigDecimal("22.0"), new BigDecimal("21.0"));
-        Product product2 = new Product("Tv", new BigDecimal("243.43"), new BigDecimal("21.0"));
+        ProductResponse product1 = new ProductResponse(1L,"Book", BigDecimal.valueOf(2.3),BigDecimal.valueOf(21.0));
+        ProductResponse product2 = new ProductResponse(2L,"Shelf", BigDecimal.valueOf(50.3),BigDecimal.valueOf(21.0));
 
         Mockito.when(service.getAllProducts()).thenReturn(List.of(product1,product2));
 
@@ -46,7 +48,7 @@ public class ProductsControllerTest {
 
     @Test
     void getProductById() throws Exception{
-        Product product1 = new Product("Pc", 22.1, 21);
+        ProductResponse product1 = new ProductResponse(1L,"Book", BigDecimal.valueOf(2.3),BigDecimal.valueOf(21.0));
         Mockito.when(service.getProductById(1L)).thenReturn(product1);
 
         mockMvc.perform(get("/products/{id}", 1L))
@@ -56,8 +58,8 @@ public class ProductsControllerTest {
 
     @Test
     void createProduct() throws Exception{
-        Product product1 = new Product("Pc", 22.1, 21);
-        Mockito.when(service.createProduct(Mockito.any(Product.class))).thenReturn(product1);
+        ProductResponse product1 = new ProductResponse(1L,"Book", BigDecimal.valueOf(2.3),BigDecimal.valueOf(21.0));
+        Mockito.when(service.createProduct(Mockito.any(CreateProductRequest.class))).thenReturn(product1);
 
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
