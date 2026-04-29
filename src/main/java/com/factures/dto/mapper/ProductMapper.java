@@ -15,7 +15,7 @@ public class ProductMapper {
         return new Product(request.description(),request.unitPrice(), request.taxes());
     }
 
-    public Product updateToEntity(UpdateProductRequest update){
+    public Product updateToEntity(UpdateProductRequest update, Product existingProduct){
         existingProduct.setDescription(update.description());
         existingProduct.setUnitPrice(update.unitPrice());
         existingProduct.setTaxes(update.taxes());
@@ -23,7 +23,7 @@ public class ProductMapper {
     }
 
     public ProductResponse entityToDTO(Product product){
-        return new ProductResponse(product.getDescription(),product.getUnitPrice(),product.getTaxes());
+        return new ProductResponse(product.getId(),product.getDescription(),product.getUnitPrice(),product.getTaxes());
     }
 
     public List<ProductResponse> entitiesToDTOList(List<Product> products) {

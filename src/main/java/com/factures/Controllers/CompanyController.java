@@ -2,6 +2,7 @@ package com.factures.Controllers;
 
 import com.factures.Service.CompanyService;
 import com.factures.dto.request.CreateCompanyRequest;
+import com.factures.dto.request.UpdateCompanyRequest;
 import com.factures.dto.response.CompanyResponse;
 import com.factures.entities.Company;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,23 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<CompanyResponse> createCompany(@RequestBody CreateCompanyRequest newCompany){
-        Company theCompany = companyService.createCompany(newCompany);
+    public ResponseEntity<CompanyResponse> createCompany(@RequestBody CreateCompanyRequest companyRequest){
+        CompanyResponse theCompany = companyService.createCompany(companyRequest);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(theCompany.getId())
+                .buildAndExpand(theCompany.id())
                 .toUri();
 
         return ResponseEntity.created(location).body(theCompany);
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<CompanyResponse> updateCompany(@PathVariable long id, @RequestBody UpdateCompanyRequest request){
+        return ResponseEntity.ok(companyService.updateCompany(request, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCompany(@PathVariable long id){
+        companyService.deleteCompany(id);
     }
 }

@@ -48,7 +48,8 @@ public class ProductsService {
         if(!productsRepository.existsById(id)){
             throw new IllegalArgumentException("We can't update this productId");
         }
-        Product updatedProduct = productMapper.updateToEntity(request);
+        Product theProduct = productsRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("This ProductId cannot be found"));
+        Product updatedProduct = productMapper.updateToEntity(request, theProduct);
         updatedProduct = productsRepository.save(updatedProduct);
         return productMapper.entityToDTO(updatedProduct);
     }

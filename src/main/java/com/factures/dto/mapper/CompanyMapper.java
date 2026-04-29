@@ -3,6 +3,7 @@ package com.factures.dto.mapper;
 import com.factures.dto.request.CreateClientRequest;
 import com.factures.dto.request.CreateCompanyRequest;
 import com.factures.dto.request.UpdateClientRequest;
+import com.factures.dto.request.UpdateCompanyRequest;
 import com.factures.dto.response.ClientResponse;
 import com.factures.dto.response.CompanyResponse;
 import com.factures.entities.Client;
@@ -25,5 +26,13 @@ public class CompanyMapper {
 
     public List<CompanyResponse> entitiesToDTOList(List<Company> companies) {
         return companies.stream().map(this::entityToDTO).collect(Collectors.toList());
+    }
+
+    public Company updateToEntity(UpdateCompanyRequest request, Company existingCompany){
+        existingCompany.setName(request.name());
+        request.email().ifPresent(existingCompany::setEmail);
+        request.address().ifPresent(existingCompany::setAddress);
+        request.iban().ifPresent(existingCompany::setIban);
+        return existingCompany;
     }
 }

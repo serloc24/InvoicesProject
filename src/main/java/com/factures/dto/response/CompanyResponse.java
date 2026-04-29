@@ -1,12 +1,10 @@
 package com.factures.dto.response;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
-public record CompanyResponse(String name, String email, String address) {
+public record CompanyResponse(@NotNull long id, @NotBlank String name, @NotBlank String email, String address) {
 
-    public CompanyResponse{
-        Objects.requireNonNull(name, "Name cannot be null");
-        Objects.requireNonNull(email, "Email cannot be null");
-        Objects.requireNonNull(address, "Address cannot be null");
-    }
 }
