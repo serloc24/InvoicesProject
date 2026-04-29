@@ -27,9 +27,9 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.getAllCompanies());
     }
 
-    @GetMapping
+    @GetMapping(path = "/search")
     public ResponseEntity<CompanyResponse> getCompany(@RequestParam(required = false) String name,
-                                                      @RequestParam(required = false) String email){
+                                                       @RequestParam(required = false) String email){
 
         return ResponseEntity.ok(companyService.getCompanyByNameOrEmail(name, email));
     }

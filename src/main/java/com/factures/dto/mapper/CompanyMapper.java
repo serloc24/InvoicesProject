@@ -21,7 +21,7 @@ public class CompanyMapper {
     }
 
     public CompanyResponse entityToDTO(Company company){
-        return new CompanyResponse(company.getName(), company.getEmail(), company.getAddress());
+        return new CompanyResponse(company.getId(), company.getName(), company.getEmail(), company.getAddress());
     }
 
     public List<CompanyResponse> entitiesToDTOList(List<Company> companies) {

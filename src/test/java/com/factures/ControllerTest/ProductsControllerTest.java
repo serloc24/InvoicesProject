@@ -43,7 +43,7 @@ public class ProductsControllerTest {
         mockMvc.perform(get("/products"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].description").value("Pc"));
+                .andExpect(jsonPath("$[0].description").value("Book"));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ProductsControllerTest {
 
         mockMvc.perform(get("/products/{id}", 1L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.description").value("Pc"));
+                .andExpect(jsonPath("$.description").value("Book"));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ProductsControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(header().exists("location"))
-                .andExpect(jsonPath("$.description").value("Pc"));
+                .andExpect(jsonPath("$.description").value("Book"));
 
     }
 

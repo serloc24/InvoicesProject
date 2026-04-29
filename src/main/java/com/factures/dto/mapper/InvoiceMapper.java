@@ -44,9 +44,9 @@ public class InvoiceMapper {
                     invoice.getReason(),
                     invoice.getDueDate(),
                     invoice.getTotalAmount(),
-                    companyMapper.entityToDTO(invoice.getCompany()),
-                    clientMapper.entityToDTO(invoice.getClient()),
-                    invoiceDetailsMapper.entitiesToDTOList(invoice.getLines())
+                    invoice.getCompany().getId(),
+                    invoice.getClient().getId()
+
             );
     }
 

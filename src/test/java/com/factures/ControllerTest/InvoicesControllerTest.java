@@ -2,6 +2,8 @@ package com.factures.ControllerTest;
 
 import com.factures.Controllers.InvoicesController;
 import com.factures.Service.InvoiceService;
+import com.factures.dto.request.CreateInvoiceDetailsRequest;
+import com.factures.dto.request.CreateInvoiceRequest;
 import com.factures.dto.response.*;
 import com.factures.entities.Client;
 import com.factures.entities.Company;
@@ -38,17 +40,11 @@ public class InvoicesControllerTest {
     @Test
     void getAllInvoices() throws Exception {
 
-        InvoiceDetailsResponse detailsResponse1 = new InvoiceDetailsResponse(new ProductResponse("Toilet",BigDecimal.valueOf(30),BigDecimal.valueOf(21)),2);
-        InvoiceResponse invoice1 = new InvoiceResponse(1L, LocalDate.now(),"ACCEPTED","Restoration",LocalDate.now(), BigDecimal.valueOf(21),
-                new CompanyResponse("RestoredSL","restorations@restorations.com","Restoration Street"),
-                new ClientResponse(1L,"Juan","juan@juan.com","Juan Street"),
-                List.of(detailsResponse1));
+        InvoiceDetailsResponse detailsResponse1 = new InvoiceDetailsResponse(new ProductResponse(1L,"Toilet",BigDecimal.valueOf(30),BigDecimal.valueOf(21)),2);
+        InvoiceResponse invoice1 = new InvoiceResponse(1L, LocalDate.now(),"ACCEPTED","Restoration",LocalDate.now(), BigDecimal.valueOf(21),1L,2L);
 
-        InvoiceDetailsResponse detailsResponse2 = new InvoiceDetailsResponse(new ProductResponse("Bath",BigDecimal.valueOf(21),BigDecimal.valueOf(21)),2);
-        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"PENDING","Restoration",LocalDate.now(), BigDecimal.valueOf(21),
-                new CompanyResponse("RestoredSL","restorations@restorations.com","Restoration Street"),
-                new ClientResponse(1L,"Paco","paco@paco.com","Paco Street"),
-                List.of(detailsResponse2));
+        InvoiceDetailsResponse detailsResponse2 = new InvoiceDetailsResponse(new ProductResponse(1L,"Bath",BigDecimal.valueOf(21),BigDecimal.valueOf(21)),2);
+        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"PENDING","Restoration",LocalDate.now(), BigDecimal.valueOf(21),1L,2L);
         Mockito.when(service.getAllInvoices()).thenReturn(List.of(invoice1,invoice2));
 
         mockMvc.perform(get("/invoices"))
@@ -59,66 +55,55 @@ public class InvoicesControllerTest {
 
     @Test
     void getAllInvoicesOfAClient() throws Exception{
-        InvoiceDetailsResponse detailsResponse = new InvoiceDetailsResponse(new ProductResponse("Bath",BigDecimal.valueOf(21),BigDecimal.valueOf(21)),2);
-        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21),
-                                                        new CompanyResponse("RestoredSL","restorations@restorations.com","Restoration Street"),
-                                                        new ClientResponse(1L,"Paco","paco@paco.com","Paco Street"),
-                                                        List.of(detailsResponse));
+        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21), 1L,2L);
         Mockito.when(service.getAllInvoicesByClient(1L)).thenReturn(List.of(invoice2));
 
         mockMvc.perform(get("/invoices/client/{clientId}",1L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].state").value("PAID"));
+                .andExpect(jsonPath("$[0].state").value("Pending"));
 
     }
 
     @Test
     void getInvoiceById()throws Exception{
-        InvoiceDetailsResponse detailsResponse = new InvoiceDetailsResponse(new ProductResponse("Bath",BigDecimal.valueOf(21),BigDecimal.valueOf(21)),2);
-        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21),
-                new CompanyResponse("RestoredSL","restorations@restorations.com","Restoration Street"),
-                new ClientResponse(1L,"Paco","paco@paco.com","Paco Street"),
-                List.of(detailsResponse));
+        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21), 1L,2L);
+
         Mockito.when(service.getInvoiceById(1L)).thenReturn(invoice2);
 
         mockMvc.perform(get("/invoices/{invoiceId}", 1L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.reason").value("Car fix"));
+                .andExpect(jsonPath("$.reason").value("Restoration"));
 
     }
 
     @Test
     void getInvoiceByCompany() throws Exception{
-        InvoiceDetailsResponse detailsResponse = new InvoiceDetailsResponse(new ProductResponse("Bath",BigDecimal.valueOf(21),BigDecimal.valueOf(21)),2);
-        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21),
-                new CompanyResponse("RestoredSL","restorations@restorations.com","Restoration Street"),
-                new ClientResponse(1L,"Paco","paco@paco.com","Paco Street"),
-                List.of(detailsResponse));
+        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21), 1L,2L);
+
         Mockito.when(service.getInvoicesByCompany(1L)).thenReturn(List.of(invoice2));
 
         mockMvc.perform(get("/invoices/company/{companyId}", 1L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].company.name").value("Mechanics"));
+                .andExpect(jsonPath("$[0].companyId").value(1L));
     }
 
     @Test
     void getInvoiceByState() throws Exception{
-        InvoiceDetailsResponse detailsResponse = new InvoiceDetailsResponse(new ProductResponse("Bath",BigDecimal.valueOf(21),BigDecimal.valueOf(21)),2);
-        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21),
-                new CompanyResponse("RestoredSL","restorations@restorations.com","Restoration Street"),
-                new ClientResponse(1L,"Paco","paco@paco.com","Paco Street"),
-                List.of(detailsResponse));
-        Mockito.when(service.getInvoicesByState("PAID")).thenReturn(List.of(invoice2));
+        InvoiceResponse invoice2 = new InvoiceResponse(1L, LocalDate.now(),"Pending","Restoration",LocalDate.now(), BigDecimal.valueOf(21), 1L,2L);
 
-        mockMvc.perform(get("/invoices").param("state","PAID"))
+        Mockito.when(service.getInvoicesByState("Pending")).thenReturn(List.of(invoice2));
+
+        mockMvc.perform(get("/invoices").param("state","Pending"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].state").value("PAID"));
+                .andExpect(jsonPath("$[0].state").value("Pending"));
     }
 
     @Test
     void createInvoice() throws Exception{
-        Invoice invoice2 = new Invoice("PAID", "Car fix", new Company("Mechanics", "car@car.com","Mechanics Address"),new Client("Luis", "Luis@Luis.com","Luis Street"));
-        Mockito.when(service.createInvoice(Mockito.any(Invoice.class))).thenReturn(invoice2);
+        CreateInvoiceDetailsRequest createInvoiceRequest = new CreateInvoiceDetailsRequest(1L,2L,2);
+        CreateInvoiceDetailsRequest createInvoiceRequest2 = new CreateInvoiceDetailsRequest(1L,3L,3);
+        CreateInvoiceRequest invoice2 = new CreateInvoiceRequest("Car fix", 1L,1L,List.of(createInvoiceRequest,createInvoiceRequest2));
+        Mockito.when(service.createInvoice(Mockito.any(CreateInvoiceRequest.class))).thenReturn(new InvoiceResponse(1L,LocalDate.now(),"PAID","Car fix",LocalDate.now(),BigDecimal.valueOf(21),1L,2L));
 
         mockMvc.perform(post("/invoices")
                         .contentType(MediaType.APPLICATION_JSON)

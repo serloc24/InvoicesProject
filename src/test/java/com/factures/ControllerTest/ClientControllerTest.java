@@ -2,6 +2,7 @@ package com.factures.ControllerTest;
 
 import com.factures.Controllers.ClientsController;
 import com.factures.Service.ClientsService;
+import com.factures.dto.mapper.ClientMapper;
 import com.factures.dto.request.CreateClientRequest;
 import com.factures.dto.response.ClientResponse;
 import com.factures.entities.Client;
@@ -32,6 +33,9 @@ public class ClientControllerTest {
 
     @MockitoBean
     private ClientsService service;
+
+    @MockitoBean
+    private ClientMapper mapper;
 
     @Test
     void getAllClients() throws Exception{
@@ -74,7 +78,7 @@ public class ClientControllerTest {
 
         mockMvc.perform(get("/clients").param("name","Pedro"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Pedro"));
+                .andExpect(jsonPath("$.name").value("Pedro"));
 
     }
 

@@ -1,5 +1,6 @@
 package com.factures.dto.response;
 
+import com.factures.dto.request.CreateInvoiceDetailsRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
@@ -13,7 +14,6 @@ public record InvoiceResponse(long id,
                               @JsonFormat(pattern = "yyyy-MM-dd")
                               LocalDate dueDate,
                               BigDecimal totalAmount,
-                              CompanyResponse company,
-                              ClientResponse client,
-                              List<InvoiceDetailsResponse> lines) {
+                              long companyId,
+                              long clientId) {
 }
